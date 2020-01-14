@@ -1,0 +1,159 @@
+from random import randrange
+from time import sleep
+execusao = True
+numero_da_maquina = None
+fase_de_execusao = int(1)
+numeros_de_tentativa = None
+nivel_de_dificuldade = None
+rodada = None
+print('=' * 100, f'\n{" " * 64}Seja bem vindo :)')
+while execusao:
+    print(f'{"=" * 100}')
+    if fase_de_execusao == 1:
+        print(f'{"=" * 100}')
+        op = str(input(
+            ' \n                                                               [1] - Iniciar o jogo\n'
+            ' \n'
+            '                                                                [2] - Como jogar\n'
+            ' \n'
+            '                                                                [3] - Sair\n'
+            '  \n'
+            '  \n'
+            '    Digite o número da opção para selecionar: ').strip())
+        if op.isnumeric():
+            op = int(op)
+        while op not in (1, 2, 3):
+            print('\033[;31mOpção invalida, tente novamente\033[;;m ')
+            op = (input("\n"
+                        '                                                      [1 - Iniciar o jogo\n'
+                        '        \n'
+                        '                                                      [2] - Como jogar\n'
+                        '        \n'
+                        '                                                      [3] - Sair\n'
+                        '        \n'
+                        '    \n'
+                        ''
+                        "Digite o número da opção  para selecionar: ").strip())
+            if op.isnumeric():
+                op = int(op)
+        if op == 1:
+            fase_de_execusao = 2
+        if op == 2:
+            fase_de_execusao = 5
+        if op == 3:
+            fase_de_execusao = 6
+    if fase_de_execusao == 2:
+        print(f'{"=" * 100}')
+        nivel_de_dificuldade = str((input('[1] Muito Facíl (tentativas ilimitadas)\n'
+                                          '[2] Facíl(8 tentativas)\n'
+                                          '[3] Médio(5  tentativas)\n'
+                                          '[4] Difícil(3 ''tentativas)\n'
+                                          '[5] Very Hard (1 tentativa)\n'
+                                          'Digite o numero da opção para selecionar: ')).strip())
+        if nivel_de_dificuldade.isnumeric():
+            nivel_de_dificuldade = int(nivel_de_dificuldade)
+        while nivel_de_dificuldade not in (1, 2, 3, 4, 5):
+            print(f'{"=" * 100}')
+            print('Opção invalida, tente novamente')
+            nivel_de_dificuldade = str(input('[1] - Muito Facíl (tentativas ilimitadas)'
+                                             '\n[2] - Facíl(8 tentativas)'
+                                             '\n[3] - Médio(5  tentativas)'
+                                             '\n[4] - Difícil(3 tentativas)'
+                                             '\n[5] - Very Hard (1 tentativa)'
+                                             '\nDigite o número da opção  para selecionar:').strip())
+            if nivel_de_dificuldade.isnumeric():
+                nivel_de_dificuldade = int(nivel_de_dificuldade)
+        if nivel_de_dificuldade == 1:
+            numeros_de_tentativa = 'infinita'
+        if nivel_de_dificuldade == 2:
+            numeros_de_tentativa = 8
+        if nivel_de_dificuldade == 3:
+            numeros_de_tentativa = 5
+        if nivel_de_dificuldade == 4:
+            numeros_de_tentativa = 3
+        if nivel_de_dificuldade == 5:
+            numeros_de_tentativa = 1
+        fase_de_execusao = 3
+    if fase_de_execusao == 3:
+        numero_da_maquina = randrange(1, 11)
+        rodada = 0
+        print('=' * 156, f'\n{" " * 64} Bem vindo ao game!!!')
+        print('Tente adivinhar entre 1 e 10 o número escolhido pela maquina:')
+        if numeros_de_tentativa == 'infinita':
+            parametro = 2
+            while 2 == parametro:
+                rodada += 1
+                numero_do_usuario = str(input(f'digite o seu {rodada}º numero: '))
+                if numero_do_usuario.isnumeric():
+                    numero_do_usuario = int(numero_do_usuario)
+                while numero_do_usuario not in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10):
+                    print('Resposta invalida, tente novamente.')
+                    numero_do_usuario = (input(
+                        f'\nDigite um dos numeros a seguir para tentar adivinhar qual é o numero escolhido pela maquina (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)')).strip()
+                    if numero_do_usuario.isnumeric():
+                        numero_do_usuario = int(numero_do_usuario)
+                if numero_do_usuario == numero_da_maquina:
+                    print(f'Parabens você acertou, o número escolhido pela maquina era {numero_da_maquina} ')
+                    fase_de_execusao = 4
+                    parametro = 1
+        else:
+            while rodada != numeros_de_tentativa:
+                rodada += 1
+                numero_do_usuario = str(input(f'digite o seu {rodada}º numero: '))
+                if numero_do_usuario.isnumeric():
+                    numero_do_usuario = int(numero_do_usuario)
+                while numero_do_usuario not in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10):
+                    print('Resposta invalida, tente novamente.')
+                    numero_do_usuario = (input(
+                        f'\nDigite um dos numeros a seguir para tentar adivinhar qual é o numero escolhido pela maquina (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)')).strip()
+                    if numero_do_usuario.isnumeric():
+                        numero_do_usuario = int(numero_do_usuario)
+                if numero_do_usuario == numero_da_maquina:
+                    print(f'Parabens você acertou, o número escolhido pela maquina era {numero_da_maquina} ')
+                    fase_de_execusao = 4
+                    rodada = numeros_de_tentativa
+                    print('Fim do jogo')
+                else:
+                    if numeros_de_tentativa == rodada:
+                        print(f'Você perdeu, o númeor escolhido pela maquina era {numero_da_maquina}')
+                        fase_de_execusao = 4
+                        rodada = numeros_de_tentativa
+                        print('Fim do jogo')
+                    else:
+                        print('resposta errada, tente novamente')
+    if fase_de_execusao == 4:
+        print('=' * 156)
+        op = str((input('[1] - voltar ao menu principal'
+                        '\n[2] - jogar novamente com o mesmo nivel de dificuldade'
+                        '\n[3] - voltar ao menu de dificuldade'
+                        '\n[4] - Sair do jogo'
+                        '\nDigite o número da opção para selecionar: ')).strip())
+        if op.isnumeric():
+            op = int(op)
+        while op not in (1, 2, 3, 4):
+            print(f'{"=" * 156}')
+            print('Opção invalida, tente novamente')
+            op = str((input('[1] - voltar ao menu principal'
+                            '\n[2] - jogar novamente com o mesmo nivel de dificuldade'
+                            '\n[3] - voltar ao menu de dificuldade'
+                            '\n[4] - Sair do jogo'
+                            '\nDigite o numero  destacado  para selecionar a opção:')).strip())
+            if op.isnumeric():
+                op = int(op)
+        if op == 1:
+            fase_de_execusao = 1
+        if op == 2:
+            fase_de_execusao = 3
+        if op == 3:
+            fase_de_execusao = 2
+        if op == 4:
+            fase_de_execusao = 6
+    if fase_de_execusao == 5:
+        print(f'{"=" * 156}')
+        print('O seu objetivo principal é adivinhar o número escolhido aleatoriamente pela maquina dentro do número de tentativas '
+              '\n maxímas escolhidas anteriormente no menu de dificuldade')
+        sleep(10)
+        fase_de_execusao = 1
+    if fase_de_execusao == 6:
+        print(f'{"=" * 156}')
+        execusao = False
